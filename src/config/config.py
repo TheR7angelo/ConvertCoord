@@ -17,7 +17,7 @@ class Configue:
                 "config": {
                     "theme": "gunmetal",
                     "font": "Berlin Sans FB Demi",
-                    "widht": 1200,
+                    "widht": 1450,
                     "height": 800,
                     "opacity": 1,
                     "cur": "test"

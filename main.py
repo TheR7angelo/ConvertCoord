@@ -317,6 +317,9 @@ class main(Ui_main, QtWidgets.QWidget):
             texte = texte[:-1] + "\n"
         QtWidgets.QApplication.clipboard().setText(texte)
 
+    def GetMaxRow(self):
+        return self.conversion.rowCount()
+
     def coller(self, table):
         data = QtWidgets.QApplication.clipboard().text()
 
@@ -324,6 +327,12 @@ class main(Ui_main, QtWidgets.QWidget):
         y_init = table.currentColumn()
 
         row = data.split("\n")
+
+        while self.GetMaxRow() <= (len(row)-2):
+            self.conversion.insertRow(self.GetMaxRow())
+            #maxRow = self.conversion.rowCount()
+
+
         for x, col in enumerate(row):
             text = col.split("\t")
             for y, item in enumerate(text):
@@ -353,6 +362,7 @@ class main(Ui_main, QtWidgets.QWidget):
     def e_resize_screen(self):
 
         if self.cfg["var"]["resize"]:
+            print(self.cfg["config"]["widht"])
             self.setMinimumWidth(self.cfg["config"]["widht"])
             self.setMinimumHeight(self.cfg["config"]["height"])
         else:

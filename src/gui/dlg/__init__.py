@@ -6,4 +6,3 @@ from src.gui.dlg.RgbBox.RgbBox import RgbBox
 from src.gui.dlg.SplashScreen.SplashScreen import SplashScreen
 from src.gui.dlg.ToolBoxUi.ToolBoxUi import ToolBoxUi
 
-from src.gui.dlg.Calculatrice.CalculatriceBox import CalculatriceBox
