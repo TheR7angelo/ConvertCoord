@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<profile>
+ <version>LibreOffice v1</version>
+ <device>
+  <type>opencl</type>
+  <name>Intel(R) Iris(R) Xe Graphics</name>
+  <driver>27.20.100.9749</driver>
+  <time>max</time>
+  <errors>false</errors>
+ </device>
+ <device>
+  <type>opencl</type>
+  <name>T500</name>
+  <driver>462.75</driver>
+  <time>56999</time>
+  <errors>false</errors>
+ </device>
+ <device>
+  <type>native</type>
+  <time>2236416</time>
+  <errors>false</errors>
+ </device>
+</profile>

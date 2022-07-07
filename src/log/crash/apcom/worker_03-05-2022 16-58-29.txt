@@ -1,0 +1,1 @@
+Ligne 504 Internal C++ object (PySide6.QtWidgets.QTableWidget) already deleted.

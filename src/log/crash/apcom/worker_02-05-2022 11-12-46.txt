@@ -1,0 +1,1 @@
+Ligne 481 could not convert string to float: '45°0\'51.0299"N'

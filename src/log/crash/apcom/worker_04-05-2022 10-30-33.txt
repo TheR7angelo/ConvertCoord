@@ -1,0 +1,1 @@
+Ligne 530 'NoneType' object is not subscriptable
