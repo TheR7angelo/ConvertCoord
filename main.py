@@ -1,8 +1,8 @@
+import contextlib
 import os
 import sys
 
 from PySide6 import QtCore, QtWidgets, QtGui
-from PySide6.QtWidgets import QFileDialog, QTableWidgetItem
 
 from src import *
 from src.gui import *
@@ -213,31 +213,35 @@ class main(Ui_main, QtWidgets.QWidget):
             coordX = coordX.text().replace(",", ".")
             coordY = coordY.text().replace(",", ".")
 
-            match y:
-                case 0 | 1:
-                    WcoordX, WcoordY = self.convertiseur.transform(de="2154", to="4326", coordX=coordX, coordY=coordY)
-                    self.conversion.setItem(x, 2, QtWidgets.QTableWidgetItem(f"{WcoordX}"))
-                    self.conversion.setItem(x, 3, QtWidgets.QTableWidgetItem(f"{WcoordY}"))
+            with contextlib.suppress(Exception):
+                if coordX.count(".") == 1 and coordY.count(".") == 1:
+                    match y:
+                        case 0 | 1:
+                            WcoordX, WcoordY = self.convertiseur.transform(de="2154", to="4326", coordX=coordX, coordY=coordY)
+                            self.conversion.setItem(x, 2, QtWidgets.QTableWidgetItem(f"{WcoordX}"))
+                            self.conversion.setItem(x, 3, QtWidgets.QTableWidgetItem(f"{WcoordY}"))
 
-                    ScoordX, ScoordY = self.convertiseur.transform(de="2154", to="sexa", coordX=coordX, coordY=coordY)
-                    self.conversion.setItem(x, 4, QtWidgets.QTableWidgetItem(f"{ScoordX}"))
-                    self.conversion.setItem(x, 5, QtWidgets.QTableWidgetItem(f"{ScoordY}"))
-                case 2 | 3:
-                    LcoordX, LcoordY = self.convertiseur.transform(de="4326", to="2154", coordX=coordX, coordY=coordY)
-                    self.conversion.setItem(x, 0, QtWidgets.QTableWidgetItem(f"{LcoordX}"))
-                    self.conversion.setItem(x, 1, QtWidgets.QTableWidgetItem(f"{LcoordY}"))
+                            ScoordX, ScoordY = self.convertiseur.transform(de="2154", to="sexa", coordX=coordX, coordY=coordY)
+                            ScoordY = ScoordY.replace("E", "W")
+                            self.conversion.setItem(x, 4, QtWidgets.QTableWidgetItem(f"{ScoordX}"))
+                            self.conversion.setItem(x, 5, QtWidgets.QTableWidgetItem(f"{ScoordY}"))
+                        case 2 | 3:
+                            LcoordX, LcoordY = self.convertiseur.transform(de="4326", to="2154", coordX=coordX, coordY=coordY)
+                            self.conversion.setItem(x, 0, QtWidgets.QTableWidgetItem(f"{LcoordX}"))
+                            self.conversion.setItem(x, 1, QtWidgets.QTableWidgetItem(f"{LcoordY}"))
 
-                    ScoordX, ScoordY = self.convertiseur.transform(de="4326", to="sexa", coordX=coordX, coordY=coordY)
-                    self.conversion.setItem(x, 4, QtWidgets.QTableWidgetItem(f"{ScoordX}"))
-                    self.conversion.setItem(x, 5, QtWidgets.QTableWidgetItem(f"{ScoordY}"))
-                case 4 | 5:
-                    LcoordX, LcoordY = self.convertiseur.transform(de="sexa", to="2154", coordX=coordX, coordY=coordY)
-                    self.conversion.setItem(x, 0, QtWidgets.QTableWidgetItem(f"{LcoordX}"))
-                    self.conversion.setItem(x, 1, QtWidgets.QTableWidgetItem(f"{LcoordY}"))
+                            ScoordX, ScoordY = self.convertiseur.transform(de="4326", to="sexa", coordX=coordX, coordY=coordY)
+                            ScoordY = ScoordY.replace("E", "W")
+                            self.conversion.setItem(x, 4, QtWidgets.QTableWidgetItem(f"{ScoordX}"))
+                            self.conversion.setItem(x, 5, QtWidgets.QTableWidgetItem(f"{ScoordY}"))
+                        case 4 | 5:
+                            LcoordX, LcoordY = self.convertiseur.transform(de="sexa", to="2154", coordX=coordX, coordY=coordY)
+                            self.conversion.setItem(x, 0, QtWidgets.QTableWidgetItem(f"{LcoordX}"))
+                            self.conversion.setItem(x, 1, QtWidgets.QTableWidgetItem(f"{LcoordY}"))
 
-                    WcoordX, WcoordY = self.convertiseur.transform(de="sexa", to="4326", coordX=coordX, coordY=coordY)
-                    self.conversion.setItem(x, 2, QtWidgets.QTableWidgetItem(f"{WcoordX}"))
-                    self.conversion.setItem(x, 3, QtWidgets.QTableWidgetItem(f"{WcoordY}"))
+                            WcoordX, WcoordY = self.convertiseur.transform(de="sexa", to="4326", coordX=coordX, coordY=coordY)
+                            self.conversion.setItem(x, 2, QtWidgets.QTableWidgetItem(f"{WcoordX}"))
+                            self.conversion.setItem(x, 3, QtWidgets.QTableWidgetItem(f"{WcoordY}"))
 
         self.conversion.blockSignals(False)
 
@@ -362,7 +366,6 @@ class main(Ui_main, QtWidgets.QWidget):
     def e_resize_screen(self):
 
         if self.cfg["var"]["resize"]:
-            print(self.cfg["config"]["widht"])
             self.setMinimumWidth(self.cfg["config"]["widht"])
             self.setMinimumHeight(self.cfg["config"]["height"])
         else:
