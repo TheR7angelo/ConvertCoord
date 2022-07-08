@@ -214,7 +214,7 @@ class main(Ui_main, QtWidgets.QWidget):
             coordY = coordY.text().replace(",", ".")
 
             with contextlib.suppress(Exception):
-                if coordX.count(".") == 1 and coordY.count(".") == 1:
+                if coordX.count(".") <= 1 and coordY.count(".") <= 1:
                     match y:
                         case 0 | 1:
                             WcoordX, WcoordY = self.convertiseur.transform(de="2154", to="4326", coordX=coordX, coordY=coordY)
@@ -222,7 +222,6 @@ class main(Ui_main, QtWidgets.QWidget):
                             self.conversion.setItem(x, 3, QtWidgets.QTableWidgetItem(f"{WcoordY}"))
 
                             ScoordX, ScoordY = self.convertiseur.transform(de="2154", to="sexa", coordX=coordX, coordY=coordY)
-                            ScoordY = ScoordY.replace("E", "W")
                             self.conversion.setItem(x, 4, QtWidgets.QTableWidgetItem(f"{ScoordX}"))
                             self.conversion.setItem(x, 5, QtWidgets.QTableWidgetItem(f"{ScoordY}"))
                         case 2 | 3:
@@ -231,7 +230,6 @@ class main(Ui_main, QtWidgets.QWidget):
                             self.conversion.setItem(x, 1, QtWidgets.QTableWidgetItem(f"{LcoordY}"))
 
                             ScoordX, ScoordY = self.convertiseur.transform(de="4326", to="sexa", coordX=coordX, coordY=coordY)
-                            ScoordY = ScoordY.replace("E", "W")
                             self.conversion.setItem(x, 4, QtWidgets.QTableWidgetItem(f"{ScoordX}"))
                             self.conversion.setItem(x, 5, QtWidgets.QTableWidgetItem(f"{ScoordY}"))
                         case 4 | 5:

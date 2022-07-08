@@ -1,1 +1,0 @@
-Ligne 525 invalid literal for int() with base 10: 'xxxxxx'

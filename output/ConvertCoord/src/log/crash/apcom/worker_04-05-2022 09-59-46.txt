@@ -1,1 +1,0 @@
-Ligne 512 invalid literal for int() with base 10: '0°23\'23.901"W'

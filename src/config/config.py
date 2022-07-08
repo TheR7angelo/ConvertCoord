@@ -10,7 +10,7 @@ class Configue:
                 "infos": {
                     "nom": "ConvertCoord",
                     "description": "Macro permettant de projeter des coordonnées.",
-                    "version": "0.2",
+                    "version": "0.3",
                     "auteur": "ZP6177",
                     "compagnie": "ZP6177"
                 },
