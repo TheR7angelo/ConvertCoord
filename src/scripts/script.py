@@ -44,7 +44,7 @@ class convert:
                 sens = 'E' if index == 0 else 'N'
             wsg.append(f'{degrees}°{minutes}' + "'" + str("%.4f" % seconds) + '"' + sens)
 
-        return wsg[1], wsg[0]
+        return wsg[0], wsg[1]
 
     @staticmethod
     def ToDms(coord):
@@ -91,7 +91,7 @@ class convert:
                 return self.error()
 
             case "sexa":
-                coordX, coordY = self.ToDms(coord=coordY), self.ToDms(coord=coordX)
+                coordX, coordY = self.ToDms(coord=coordX), self.ToDms(coord=coordY)
                 match to:
                     case "2154" | "27582":
                         transformer = self.GetTransformer(de="4326", to=to)
@@ -99,7 +99,7 @@ class convert:
                     case "4326":
                         return coordX, coordY
                     case "sexa":
-                        return coordX, coordY
+                        return self.ToSexa(coordX=float(coordX), coordY=float(coordY))
                 return self.error()
 
             case "27582":
