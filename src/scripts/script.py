@@ -66,33 +66,64 @@ class convert:
                 transformer = self.GetTransformer(de=de, to="4326")
                 if self.isNombre(value=coordX) and self.isNombre(value=coordY):
                     match to:
+                        case "2154":
+                            return coordX, coordY
                         case "4326":
                             return transformer.transform(coordX, coordY)
                         case "sexa":
                             coordX, coordY = transformer.transform(coordX, coordY)
-                            return self.ToSexa(coordX=float(coordX), coordY=float(coordY))
-                return "NaN", "NaN"
-            case "4326":
-                if self.isNombre(value=coordX) and self.isNombre(value=coordY):
-                    match to:
-                        case "2154":
+                            return self.ToSexa(coordX=float(coordY), coordY=float(coordX))
+                        case "27582":
                             transformer = self.GetTransformer(de=de, to=to)
                             return transformer.transform(coordX, coordY)
+                return self.error()
+
+            case "4326":
+                if self.isNombre(value=coordX) and self.isNombre(value=coordY):
+                    transformer = self.GetTransformer(de=de, to=to)
+                    match to:
+                        case "2154" | "27582":
+                            return transformer.transform(coordX, coordY)
+                        case "4326":
+                            return coordX, coordY
                         case "sexa":
-                            return self.ToSexa(coordX=float(coordX), coordY=float(coordY))
-                    return "NaN", "NaN"
+                            return self.ToSexa(coordX=float(coordY), coordY=float(coordX))
+                return self.error()
+
             case "sexa":
                 coordX, coordY = self.ToDms(coord=coordY), self.ToDms(coord=coordX)
                 match to:
-                    case "2154":
+                    case "2154" | "27582":
                         transformer = self.GetTransformer(de="4326", to=to)
                         return transformer.transform(coordX, coordY)
                     case "4326":
                         return coordX, coordY
+                    case "sexa":
+                        return coordX, coordY
+                return self.error()
 
+            case "27582":
+                match to:
+                    case "2154" | "4326":
+                        transformer = self.GetTransformer(de="27582", to=to)
+                        return transformer.transform(coordX, coordY)
+                    case "sexa":
+                        transformer = self.GetTransformer(de=de, to="4326")
+                        coordX, coordY = transformer.transform(coordX, coordY)
+                        return self.ToSexa(coordX=float(coordY), coordY=float(coordX))
+                    case "27582":
+                        return coordX, coordY
+                return self.error()
+
+    @staticmethod
+    def error():
+        return "Nan", "Nan"
 
 if __name__ == '__main__':
     convert = convert()
-    coord = convert.transform(de="2154", to="4326", coordX="466353.752", coordY="6343763.984")
-    test = convert.transform(de="4326", to="sexa", coordX=coord[0], coordY=coord[1])
-    test2 = convert.transform(de="sexa", to="2154", coordX=test[0], coordY=test[1])
+    # coord = convert.transform(de="2154", to="4326", coordX="466353.752", coordY="6343763.984")
+    # test = convert.transform(de="4326", to="sexa", coordX=coord[0], coordY=coord[1])
+    # test2 = convert.transform(de="sexa", to="2154", coordX=test[0], coordY=test[1])
+    test3 = convert.transform(de="2154", to="sexa", coordX='412625.9', coordY='6455179.9')
+
+    print(test3)
