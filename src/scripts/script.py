@@ -39,9 +39,9 @@ class convert:
             degrees = int((lonSeconds / 60) / 60)
 
             if sens == '-':
-                sens = 'W' if index == 0 else 'S'
+                sens = 'S' if index == 0 else 'W'
             else:
-                sens = 'E' if index == 0 else 'N'
+                sens = 'N' if index == 0 else 'E'
             wsg.append(f'{degrees}°{minutes}' + "'" + str("%.4f" % seconds) + '"' + sens)
 
         return wsg[0], wsg[1]
@@ -95,7 +95,7 @@ class convert:
                 match to:
                     case "2154" | "27582":
                         transformer = self.GetTransformer(de="4326", to=to)
-                        return transformer.transform(coordX, coordY)
+                        return transformer.transform(xx=coordX, yy=coordY)
                     case "4326":
                         return coordX, coordY
                     case "sexa":
